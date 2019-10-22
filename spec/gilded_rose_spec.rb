@@ -48,10 +48,11 @@ describe GildedRose do
         expect { @gilded_rose.update_quality() }.to change{ items[0].quality }.by(-2)
       end
   
-      it "should not change the quality of general item when quality is 0" do
+      it "should not change the quality of general item to below 0" do
         items = [Item.new("foo", 10, 0)]
         init_gilded_rose(items)
-        expect { @gilded_rose.update_quality() }.not_to change{ items[0].quality }
+        @gilded_rose.update_quality()
+        expect(items[0].quality).to eq(0)
       end
     end
 
@@ -62,7 +63,7 @@ describe GildedRose do
         expect { @gilded_rose.update_quality() }.to change{ items[0].quality }.by(1)
       end
   
-      it "should not increase the quality of Aged Brie when the quality is 50" do
+      it "should not increase the quality of Aged Brie to above 50" do
         items = [Item.new("Aged Brie", 10, 50)]
         init_gilded_rose(items)
         @gilded_rose.update_quality()
@@ -88,6 +89,13 @@ describe GildedRose do
         init_gilded_rose(items)
         expect { @gilded_rose.update_quality() }.to change{ items[0].quality }.by(3)
       end
+
+      it "should not increase the quality of Backstage Pass to above 50" do
+        items = [Item.new("Backstage passes to a TAFKAL80ETC concert", 5, 49)]
+        init_gilded_rose(items)
+        @gilded_rose.update_quality()
+        expect(items[0].quality).to eq(50)
+      end
   
       it "should set the quality of Backstage Pass to 0 when sell_in is less than 0" do
         items = [Item.new("Backstage passes to a TAFKAL80ETC concert", 0, 10)]
@@ -96,8 +104,8 @@ describe GildedRose do
         expect(items[0].quality).to eq(0)
       end
   
-      it "should not increase the quality of Backstage Pass when quality is 50" do
-        items = [Item.new("Backstage passes to a TAFKAL80ETC concert", 10, 50)]
+      it "should not increase the quality of Backstage Pass to more than 50" do
+        items = [Item.new("Backstage passes to a TAFKAL80ETC concert", 5, 49)]
         init_gilded_rose(items)
         @gilded_rose.update_quality()
         expect(items[0].quality).to eq(50)
