@@ -103,5 +103,26 @@ describe GildedRose do
         expect(items[0].quality).to eq(50)
       end
     end
+
+    describe "Conjured items" do
+      it "Should change the quality by -2 before sell_in date" do
+        items = [Item.new("Conjured banana", 10, 10)]
+        init_gilded_rose(items)
+        expect { @gilded_rose.update_quality() }.to change { items[0].quality }.by(-2)
+      end
+
+      it "Should change the quality by -4 after sell_in date" do
+        items = [Item.new("Conjured banana", -1, 10)]
+        init_gilded_rose(items)
+        expect { @gilded_rose.update_quality() }.to change { items[0].quality }.by(-4)
+      end
+
+      it "Should not change the quality to below 0" do
+        items = [Item.new("Conjured banana", -1, 2)]
+        init_gilded_rose(items)
+        @gilded_rose.update_quality()
+        expect(items[0].quality).to eq(0)
+      end
+    end
   end
 end
