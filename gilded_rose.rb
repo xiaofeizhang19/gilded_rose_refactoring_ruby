@@ -10,32 +10,35 @@ class GildedRose
     @items.each do |item|
       update_sell_in(item)
 
-      if item.name == "Sulfuras, Hand of Ragnaros"
-      end
-
-      if item.name == "Aged Brie"
+      case item.name
+      when "Sulfuras, Hand of Ragnaros"
+      when "Aged Brie"
         item.quality += 1 if item.quality < MAX_QUALITY
+      when "Backstage passes to a TAFKAL80ETC concert"
+        item.quality += 1 if item.quality < MAX_QUALITY
+      else
+        item.quality -= 1 if item.quality > MIN_QUALITY
       end
 
-      if item.name != "Aged Brie" and item.name != "Backstage passes to a TAFKAL80ETC concert"
-        if item.quality > 0
-          item.quality = item.quality - 1
-        end
-      else
-          if item.name == "Backstage passes to a TAFKAL80ETC concert"
-            if item.sell_in < 11
-              if item.quality < 50
-                item.quality = item.quality + 1
-              end
-            end
-            if item.sell_in < 6
-              if item.quality < 50
-                item.quality = item.quality + 1
-              end
-            end
-          end
+      # if item.name != "Aged Brie" and item.name != "Backstage passes to a TAFKAL80ETC concert"
+      #   if item.quality > 0
+      #     item.quality = item.quality - 1
+      #   end
+      # else
+      #     if item.name == "Backstage passes to a TAFKAL80ETC concert"
+      #       if item.sell_in < 11
+      #         if item.quality < 50
+      #           item.quality = item.quality + 1
+      #         end
+      #       end
+      #       if item.sell_in < 6
+      #         if item.quality < 50
+      #           item.quality = item.quality + 1
+      #         end
+      #       end
+      #     end
         
-      end
+      # end
       
       if item.sell_in < 0
         if item.name != "Aged Brie"
