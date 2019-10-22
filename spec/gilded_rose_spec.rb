@@ -44,8 +44,24 @@ describe GildedRose do
     end
 
     it "should increase the quality of Backstage Pass by 1 when sell_in is greater than 10" do
-      items = [Item.new("Backstage passes to a TAFKAL80ETC concert", 11, 10)]
+      items = [Item.new("Backstage passes to a TAFKAL80ETC concert", 15, 10)]
       expect { GildedRose.new(items).update_quality() }.to change{ items[0].quality }.by(1)
+    end
+
+    it "should increase the quality of Backstage Pass by 2 when sell_in is 6 to 10" do
+      items = [Item.new("Backstage passes to a TAFKAL80ETC concert", 9, 10)]
+      expect { GildedRose.new(items).update_quality() }.to change{ items[0].quality }.by(2)
+    end
+
+    it "should increase the quality of Backstage Pass by 3 when sell_in is 0 to 5" do
+      items = [Item.new("Backstage passes to a TAFKAL80ETC concert", 5, 10)]
+      expect { GildedRose.new(items).update_quality() }.to change{ items[0].quality }.by(3)
+    end
+
+    it "should be 0 when sell_in is less than 0" do
+      items = [Item.new("Backstage passes to a TAFKAL80ETC concert", 0, 10)]
+      GildedRose.new(items).update_quality()
+      expect(items[0].quality).to eq(0)
     end
   end
 

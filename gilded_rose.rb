@@ -15,30 +15,19 @@ class GildedRose
       when "Aged Brie"
         item.quality += 1 if item.quality < MAX_QUALITY
       when "Backstage passes to a TAFKAL80ETC concert"
-        item.quality += 1 if item.quality < MAX_QUALITY
+        if item.sell_in > 10
+          item.quality += 1 if item.quality < MAX_QUALITY
+        elsif item.sell_in <= 10 && item.sell_in > 5
+          item.quality += 2 if item.quality <= MAX_QUALITY - 2
+        elsif item.sell_in <= 5 && item.sell_in >= 0
+          item.quality += 3 if item.quality <= MAX_QUALITY - 3
+        else
+          item.quality = 0
+        end
       else
         item.quality -= 1 if item.quality > MIN_QUALITY
       end
 
-      # if item.name != "Aged Brie" and item.name != "Backstage passes to a TAFKAL80ETC concert"
-      #   if item.quality > 0
-      #     item.quality = item.quality - 1
-      #   end
-      # else
-      #     if item.name == "Backstage passes to a TAFKAL80ETC concert"
-      #       if item.sell_in < 11
-      #         if item.quality < 50
-      #           item.quality = item.quality + 1
-      #         end
-      #       end
-      #       if item.sell_in < 6
-      #         if item.quality < 50
-      #           item.quality = item.quality + 1
-      #         end
-      #       end
-      #     end
-        
-      # end
       
       if item.sell_in < 0
         if item.name != "Aged Brie"
