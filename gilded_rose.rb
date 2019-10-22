@@ -13,24 +13,38 @@ class GildedRose
       case item.name
       when "Sulfuras, Hand of Ragnaros"
       when "Aged Brie"
-        item.quality += 1 if item.quality < MAX_QUALITY
+        change_quality(item, 1)
       when "Backstage passes to a TAFKAL80ETC concert"
         if item.sell_in > 10
-          item.quality += 1 if item.quality < MAX_QUALITY
+          change_quality(item, 1)
         elsif item.sell_in.between?(6, 10)
-          item.quality += 2 if item.quality <= MAX_QUALITY - 2
+          change_quality(item, 2)
         elsif item.sell_in.between?(0, 5)
-          item.quality += 3 if item.quality <= MAX_QUALITY - 3
+          change_quality(item, 3)
         else
           item.quality = 0
         end
+      when /Conjured/
+        if item.sell_in >= 0
+          change_quality(item, -2)
+        else
+          change_quality(item, -4)
+        end
       else
-        if item.sell_in >= 0 && item.quality > MIN_QUALITY
-          item.quality -= 1
-        elsif item.quality >= MIN_QUALITY + 2
-          item.quality -= 2
+        if item.sell_in >= 0
+          change_quality(item, -1)
+        else
+          change_quality(item, -2)
         end
       end
+    end
+  end
+
+  def change_quality(item, change)
+    if change > 0
+      item.quality += [change, MAX_QUALITY - item.quality].min
+    else
+      item.quality -= [change.abs, item.quality - MIN_QUALITY].min
     end
   end
 
