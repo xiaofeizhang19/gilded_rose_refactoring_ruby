@@ -13,30 +13,50 @@ class GildedRose
       case item.name
       when "Sulfuras, Hand of Ragnaros"
       when "Aged Brie"
-        change_quality(item, 1)
+        update_aged_brie(item)
       when "Backstage passes to a TAFKAL80ETC concert"
-        if item.sell_in > 10
-          change_quality(item, 1)
-        elsif item.sell_in.between?(6, 10)
-          change_quality(item, 2)
-        elsif item.sell_in.between?(0, 5)
-          change_quality(item, 3)
-        else
-          item.quality = 0
-        end
+        update_backstage_passes(item)
       when /Conjured/
-        if item.sell_in >= 0
-          change_quality(item, -2)
-        else
-          change_quality(item, -4)
-        end
+        update_conjured(item)
       else
-        if item.sell_in >= 0
-          change_quality(item, -1)
-        else
-          change_quality(item, -2)
-        end
+        update_normal(item)
       end
+    end
+  end
+
+  def update_sell_in(item)
+    item.sell_in -= 1 unless item.name == "Sulfuras, Hand of Ragnaros"
+  end
+
+  def update_aged_brie(item)
+    change_quality(item, 1)
+  end
+
+  def update_backstage_passes(item)
+    if item.sell_in > 10
+      change_quality(item, 1)
+    elsif item.sell_in.between?(6, 10)
+      change_quality(item, 2)
+    elsif item.sell_in.between?(0, 5)
+      change_quality(item, 3)
+    else
+      item.quality = 0
+    end
+  end
+
+  def update_conjured(item)
+    if item.sell_in >= 0
+      change_quality(item, -2)
+    else
+      change_quality(item, -4)
+    end
+  end
+
+  def update_normal(item)
+    if item.sell_in >= 0
+      change_quality(item, -1)
+    else
+      change_quality(item, -2)
     end
   end
 
@@ -48,9 +68,6 @@ class GildedRose
     end
   end
 
-  def update_sell_in(item)
-    item.sell_in -= 1 if item.name != "Sulfuras, Hand of Ragnaros"
-  end
 end
 
 class Item
