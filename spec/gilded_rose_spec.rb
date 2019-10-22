@@ -23,58 +23,69 @@ describe GildedRose do
       expect(items[0].name).to eq "foo"
     end
 
-    it "does not change the quality of Sulfuras" do
-      items = [Item.new("Sulfuras, Hand of Ragnaros", 0, 0)]
-      expect { GildedRose.new(items).update_quality() }.not_to change { items[0].quality }
+    describe "Sulfuras" do
+      it "does not change the quality of Sulfuras" do
+        items = [Item.new("Sulfuras, Hand of Ragnaros", 0, 0)]
+        expect { GildedRose.new(items).update_quality() }.not_to change { items[0].quality }
+      end
     end
 
-    it "should change the quality of general item by -1" do
-      items = [Item.new("foo", 10, 10)]
-      expect { GildedRose.new(items).update_quality() }.to change{ items[0].quality }.by(-1)
+    describe "general items" do
+      it "should change the quality of general item by -1 before sell_in date" do
+        items = [Item.new("foo", 10, 10)]
+        expect { GildedRose.new(items).update_quality() }.to change{ items[0].quality }.by(-1)
+      end
+  
+      it "should change the quality of general item by -2 after sell_in date" do
+        items = [Item.new("foo", -1, 10)]
+        expect { GildedRose.new(items).update_quality() }.to change{ items[0].quality }.by(-2)
+      end
+  
+      it "should not change the quality of general item when quality is 0" do
+        items = [Item.new("foo", 10, 0)]
+        expect { GildedRose.new(items).update_quality() }.not_to change{ items[0].quality }
+      end
     end
 
-    it "should not change the quality of general item when quality is 0" do
-      items = [Item.new("foo", 10, 0)]
-      expect { GildedRose.new(items).update_quality() }.not_to change{ items[0].quality }
+    describe 'Aged Brie' do
+      it "should increase the quality of Aged Brie by 1" do
+        items = [Item.new("Aged Brie", 10, 10)]
+        expect { GildedRose.new(items).update_quality() }.to change{ items[0].quality }.by(1)
+      end
+  
+      it "should not increase the quality of Aged Brie when the quality is 50" do
+        items = [Item.new("Aged Brie", 10, 50)]
+        expect(items[0].quality).to eq(50)
+      end
     end
 
-    it "should increase the quality of Aged Brie by 1" do
-      items = [Item.new("Aged Brie", 10, 10)]
-      expect { GildedRose.new(items).update_quality() }.to change{ items[0].quality }.by(1)
+    describe "Backstage Pass" do
+      it "should increase the quality of Backstage Pass by 1 when sell_in is greater than 10" do
+        items = [Item.new("Backstage passes to a TAFKAL80ETC concert", 15, 10)]
+        expect { GildedRose.new(items).update_quality() }.to change{ items[0].quality }.by(1)
+      end
+  
+      it "should increase the quality of Backstage Pass by 2 when sell_in is 6 to 10" do
+        items = [Item.new("Backstage passes to a TAFKAL80ETC concert", 9, 10)]
+        expect { GildedRose.new(items).update_quality() }.to change{ items[0].quality }.by(2)
+      end
+  
+      it "should increase the quality of Backstage Pass by 3 when sell_in is 0 to 5" do
+        items = [Item.new("Backstage passes to a TAFKAL80ETC concert", 5, 10)]
+        expect { GildedRose.new(items).update_quality() }.to change{ items[0].quality }.by(3)
+      end
+  
+      it "should set the quality of Backstage Pass to 0 when sell_in is less than 0" do
+        items = [Item.new("Backstage passes to a TAFKAL80ETC concert", 0, 10)]
+        GildedRose.new(items).update_quality()
+        expect(items[0].quality).to eq(0)
+      end
+  
+      it "should not increase the quality of Backstage Pass when quality is 50" do
+        items = [Item.new("Backstage passes to a TAFKAL80ETC concert", 10, 50)]
+        GildedRose.new(items).update_quality()
+        expect(items[0].quality).to eq(50)
+      end
     end
-
-    it "should not increase the value of Aged Brie when quality is 50" do
-      items = [Item.new("Aged Brie", 10, 50)]
-      expect(items[0].quality).to eq(50)
-    end
-
-    it "should increase the quality of Backstage Pass by 1 when sell_in is greater than 10" do
-      items = [Item.new("Backstage passes to a TAFKAL80ETC concert", 15, 10)]
-      expect { GildedRose.new(items).update_quality() }.to change{ items[0].quality }.by(1)
-    end
-
-    it "should increase the quality of Backstage Pass by 2 when sell_in is 6 to 10" do
-      items = [Item.new("Backstage passes to a TAFKAL80ETC concert", 9, 10)]
-      expect { GildedRose.new(items).update_quality() }.to change{ items[0].quality }.by(2)
-    end
-
-    it "should increase the quality of Backstage Pass by 3 when sell_in is 0 to 5" do
-      items = [Item.new("Backstage passes to a TAFKAL80ETC concert", 5, 10)]
-      expect { GildedRose.new(items).update_quality() }.to change{ items[0].quality }.by(3)
-    end
-
-    it "should set the quality of Backstage Pass to 0 when sell_in is less than 0" do
-      items = [Item.new("Backstage passes to a TAFKAL80ETC concert", 0, 10)]
-      GildedRose.new(items).update_quality()
-      expect(items[0].quality).to eq(0)
-    end
-
-    it "should not increase the value of Backstage Pass when quality is 50" do
-      items = [Item.new("Backstage passes to a TAFKAL80ETC concert", 10, 50)]
-      GildedRose.new(items).update_quality()
-      expect(items[0].quality).to eq(50)
-    end
-
   end
-
 end
