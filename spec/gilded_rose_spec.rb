@@ -43,6 +43,11 @@ describe GildedRose do
       expect { GildedRose.new(items).update_quality() }.to change{ items[0].quality }.by(1)
     end
 
+    it "should not increase the value of Aged Brie when quality is 50" do
+      items = [Item.new("Aged Brie", 10, 50)]
+      expect(items[0].quality).to eq(50)
+    end
+
     it "should increase the quality of Backstage Pass by 1 when sell_in is greater than 10" do
       items = [Item.new("Backstage passes to a TAFKAL80ETC concert", 15, 10)]
       expect { GildedRose.new(items).update_quality() }.to change{ items[0].quality }.by(1)
