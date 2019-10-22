@@ -27,6 +27,16 @@ describe GildedRose do
       items = [Item.new("Sulfuras, Hand of Ragnaros", 0, 0)]
       expect { GildedRose.new(items).update_quality() }.not_to change { items[0].quality }
     end
+
+    it "should change the quality of general item by -1" do
+      items = [Item.new("foo", 10, 10)]
+      expect { GildedRose.new(items).update_quality() }.to change{ items[0].quality }.by(-1)
+    end
+
+    it "should not change the quality of general item when quality is 0" do
+      items = [Item.new("foo", 10, 0)]
+      expect { GildedRose.new(items).update_quality() }.not_to change{ items[0].quality }
+    end
   end
 
 end
