@@ -47,7 +47,5 @@ Then the method for updating sell_in was added and separated from updating quali
 - Case conditions were adopted instead of if-elsif for item.name, which offered more concise code.
 - Tests for normal items were added to spec. Quality change handling was added to the case conditions.
 - Additional requirement from the brief is to update 'Conjured' items. Similar to normal items but with twice of the quality degrade speed, the tests and quality change handling were added.  
-
-- Up to this point the code was already more readable and all tests were passing. While checking edge cases, it was found that some logic operators with combined sell_in value and item quality boundary value resulted in complex if-elsif conditions. Thus changing quality for item was subsquently extracted as a separate method with defined boundaries.
-
+- Upon this point the code was already more readable and all tests were passing. While checking edge cases, it was found that some logic operators with combined sell_in value and item quality boundary value resulted in complex if-elsif conditions. Thus changing quality for item was subsquently extracted as a separate method with defined boundaries.
 - The final step of the refactoring was to extract updating quality method for each item category respectively.
