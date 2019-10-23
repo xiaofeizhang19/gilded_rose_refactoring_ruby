@@ -21,7 +21,7 @@ We have recently signed a supplier of conjured items. This requires an update to
 ## Instruction
 
 ```
-$git clone [repositry]
+$git clone [repository]
 $cd gilded_rose_refactoring
 $bundle install
 ```
@@ -34,7 +34,7 @@ $rspec
 
 ## Refactoring Process
 
-Please note that the legacy code has been included in this repositry as gilded_rose_legacy_code.rb for reference.  
+Please note that the legacy code has been included in this repository as gilded_rose_legacy_code.rb for reference.  
 
 My refactoring approach as follows:
 
