@@ -34,7 +34,7 @@ $rspec
 
 ## Refactoring Process
 
-Please note that the legacy code has been included in this repositry as gilded_rose_origin.rb for reference.  
+Please note that the legacy code has been included in this repositry as gilded_rose_legacy_code.rb for reference.  
 
 My refactoring approach as follows:
 
