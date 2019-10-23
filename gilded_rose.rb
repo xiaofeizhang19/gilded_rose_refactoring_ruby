@@ -16,7 +16,7 @@ class GildedRose
         update_aged_brie(item)
       when "Backstage passes to a TAFKAL80ETC concert"
         update_backstage_passes(item)
-      when /Conjured/
+      when "Conjured Mana Cake"
         update_conjured(item)
       else
         update_normal(item)
