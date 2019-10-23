@@ -1,6 +1,6 @@
 ## Introduction
 
-This is a refactoring practice in Ruby for the Gilded Rose kata designed by [Terry Hughes](http://iamnotmyself.com/2011/02/13/refactor-this-the-gilded-rose-kata/). [Legacy code](https://github.com/emilybache/GildedRose-Refactoring-Kata) by Emily Bache.
+This is a refactoring practice in Ruby for the Gilded Rose kata designed by [Terry Hughes](http://iamnotmyself.com/2011/02/13/refactor-this-the-gilded-rose-kata/). Legacy code by [Emily Bache](https://github.com/emilybache/GildedRose-Refactoring-Kata).
 
 Here is the text of the kata:
 
@@ -50,4 +50,4 @@ Then the method for updating sell_in was added and separated from updating quali
 
 - Up to this point the code was already more readable and all tests were passing. While checking edge cases, it was found that some logic operators with combined sell_in value and item quality boundary value resulted in complex if-elsif conditions. Thus changing quality for item was subsquently extracted as a separate method with defined boundaries.
 
--The final step of the refactoring was to extract updating quality method for each item category respectively.
+- The final step of the refactoring was to extract updating quality method for each item category respectively.
