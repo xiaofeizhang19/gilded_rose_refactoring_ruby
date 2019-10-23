@@ -21,7 +21,7 @@ We have recently signed a supplier of conjured items. This requires an update to
 ## Instruction
 
 ```
-$git clone [repositry]
+$git clone [repository]
 $cd gilded_rose_refactoring
 $bundle install
 ```
